@@ -36,7 +36,7 @@ exports.validarData = (args)=>{
     erros.push("Campo data deve ser inserido!")
   }else{
     if(moment(args.data, 'YYYY-MM-DD', true).isValid()==false){
-      erros.push("Insire uma data correta")
+      erros.push("Insira uma data correta!")
     }
   }
 
