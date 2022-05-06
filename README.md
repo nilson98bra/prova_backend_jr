@@ -6,7 +6,7 @@ API construida em NodeJS, com o framework Express.
 
 - Utilizar o comando 'npm install' na pasta raiz do projeto para instalar todas as dependências.
 - Utilizar localhost:8080 para acessar a API.
-- Recomendavel utilizar ferramentas como Postman ou similares para os testes da API.
+- Recomendável utilizar ferramentas como Postman ou similares para os testes da API.
 
 ### Rotas
 
