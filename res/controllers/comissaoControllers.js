@@ -6,6 +6,10 @@ exports.calculaComissao = async (req,res)=>{
         const moment = require("moment")
         const fs = require("fs"); 
         const {pedidos} = req.body
+
+        if(pedidos.length==0){
+            return res.status(400).send({"erro":"Deve ser informado os dados de venda!"})
+        }
         const errosData = handlingErros.validarData({"data":pedidos[0].data})
         const errosNumericos = handlingErros.validarCamposNumericos({"vendedor":pedidos[0].vendedor,"valor":pedidos[0].valor},[0,0]) 
         const erros = errosData.concat(errosNumericos)
@@ -18,14 +22,14 @@ exports.calculaComissao = async (req,res)=>{
     
         pedidos.forEach((venda)=>{
             let mes = moment(venda.data).month()+1
-            let indexFuncionarioMes = totalVendas.findIndex(cur=>cur.vendedor == venda.vendedor && cur.mes==mes)
+            let index = totalVendas.findIndex(cur=>cur.vendedor == venda.vendedor && cur.mes==mes)
     
-            if(indexFuncionarioMes==-1){    
+            if(index==-1){    
                 totalVendas.push({"vendedor":venda.vendedor,"mes":mes,"valor":0,"qtd":1,"totalValor":venda.valor})
             }
             else{
-                totalVendas[indexFuncionarioMes].totalValor += venda.valor
-                totalVendas[indexFuncionarioMes].qtd += 1
+                totalVendas[index].totalValor += venda.valor
+                totalVendas[index].qtd += 1
             }
         })
      
@@ -63,7 +67,7 @@ exports.calculaComissao = async (req,res)=>{
     
         return res.status(200).send({"comissoes":comissaoMesEmetas})
     }catch(e){
-        return res.status(400).send({"erro":e})
+        return res.status(400).send({"erro":"Algo inesperado aconteceu"})
     }
    
 }

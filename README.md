@@ -4,9 +4,9 @@ API construida em NodeJS, com o framework Express.
 
 ## Como utilizar
 
-- Utilizar o comando 'npm install' na pasta raiz do projeto para isntalar todas as dependencias.
-- Utilizar localhost:8080 para acessar a API
-- Recomenda-se utilizar ferramentas como Postman ou similares para os testes da API
+- Utilizar o comando 'npm install' na pasta raiz do projeto para instalar todas as dependências.
+- Utilizar localhost:8080 para acessar a API.
+- Recomendavel utilizar ferramentas como Postman ou similares para os testes da API.
 
 ### Rotas
 
@@ -38,3 +38,10 @@ _Response 200_
 }
 
 ```
+
+#### Observação
+
+- Ficou um pouco ambíguo a divisão da porcentagem de 1%, dessa maneira, eu dividi assim:
+- Vendas abaixo de 300 => 1%
+- Vendas entre 300 e 1000 => 3%
+- Vendas acima de 1000 => 5%
