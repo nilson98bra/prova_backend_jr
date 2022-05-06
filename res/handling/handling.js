@@ -1,48 +1,76 @@
 exports.validarCamposNumericos = (args,mins=[],maxs=[])=>{
-
-    if((args.vendedor || args.valor)==undefined){
-      return ["Campos vendedor e valor devem ser preenchidos!"]
-    }
-    let erros = Object.keys(args).map((key,index)=>{
-      const listErros = []
-       if(!args[key]){
-       
-           listErros.push(`Campo '${key}' não pode ser vazio!`)
-       }
-       else{
-          if(!!isNaN(args[key])){  
-            listErros.push(`Campo '${key}' deve ser numérico!`)   
+    const errosTotais = args.map((element,index) => {
+      
+      erros = Object.keys(element).map((key,i)=>{
+        const listErros = []
+        
+        if(key!="data"){
+          if(element.vendedor == undefined || element.data == undefined || element.valor==undefined){
+            return `Todos os campos devem ser preenchidos no indice ${index}`
           }
-
-
-        if (args[key] < mins[index]){
-            listErros.push(`Campo '${key}' deve ser maior que ${mins[index]}.`)
-        }  
-        if (args[key] > maxs[index]){
-          listErros.push(`Campo '${key}' deve ser menor que ${maxs[index]}.`)
-      }     
-       }
+          else{
+            if(!element[key]){
+         
+              listErros.push(`Campo '${key}' não pode ser vazio no indice ${index}`)
+          }
+          else{
+             if(!!isNaN(element[key])){  
+               listErros.push(`Campo '${key}' deve ser numérico no indice ${index}!`)   
+             }
+    
+     
+            if (element[key] < mins[i]){
+                listErros.push(`Campo '${key}' deve ser maior que ${mins[i]} no indice ${index}!.`)
+            }  
+            if (element[key] > maxs[i]){
+              listErros.push(`Campo '${key}' deve ser menor que ${maxs[i]} no indice ${index}!`)
+            }     
+          }
+          }
   
-       return listErros.length == 0? null : listErros
-       
-   }).filter(curr => !!curr)
+
+        }
   
-   return erros
+    
+         return listErros.length == 0? null : listErros
+         
+     }).filter(curr => !!curr)
+     return erros.length == 0? null : erros
+    }).filter(curr => !!curr);
+  
+  
+  return errosTotais
   }
 
 
 exports.validarData = (args)=>{
 
   const moment = require("moment")
-  let erros = []
-  if(args.data == undefined){
-    erros.push("Campo data deve ser inserido!")
-  }else{
-    if(moment(args.data, 'YYYY-MM-DD', true).isValid()==false){
-      erros.push("Insira uma data correta!")
-    }
-  }
-
   
-  return erros
+  const errosTotais = args.map((element,index) => {
+      
+    erros = Object.keys(element).map((key)=>{
+      const listErros = []
+      
+      if(element.vendedor == undefined || element.data == undefined || element.valor==undefined){
+        return `Todos os campos devem ser preeenchidos no indice ${index}`
+      }
+
+      if(key!="vendedor" && key!="valor"){
+
+        if(moment(element[key], 'YYYY-MM-DD', true).isValid()==false){
+          listErros.push(`Insira uma data correta do indice ${index}`)
+        }
+
+    }
+
+    return listErros.length == 0? null : listErros
+       
+   }).filter(curr => !!curr)
+   return erros.length == 0? null : erros
+  }).filter(curr => !!curr);
+
+
+return errosTotais
+  
 }

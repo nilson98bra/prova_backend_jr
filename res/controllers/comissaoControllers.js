@@ -1,17 +1,17 @@
 exports.calculaComissao = async (req,res)=>{
 
-    try{
+
         const handlingErros = require("../handling/handling")
         const path = require("path");
         const moment = require("moment")
         const fs = require("fs"); 
         const {pedidos} = req.body
-
+ 
         if(pedidos.length==0){
             return res.status(400).send({"erro":"Deve ser informado os dados de venda!"})
         }
-        const errosData = handlingErros.validarData({"data":pedidos[0].data})
-        const errosNumericos = handlingErros.validarCamposNumericos({"vendedor":pedidos[0].vendedor,"valor":pedidos[0].valor},[0,0],[10000,10000000000000]) 
+        const errosData = handlingErros.validarData(pedidos)
+        const errosNumericos = handlingErros.validarCamposNumericos(pedidos,[0,0,0],[10000,0,10000000000000]) 
 
         const erros = errosData.concat(errosNumericos)
         if(erros.length>0){
@@ -67,8 +67,6 @@ exports.calculaComissao = async (req,res)=>{
         
     
         return res.status(200).send({"comissoes":comissaoMesEmetas})
-    }catch(e){
-        return res.status(400).send({"erro":"Algo inesperado aconteceu"})
-    }
+    
    
 }
