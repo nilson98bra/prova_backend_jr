@@ -39,7 +39,7 @@ _Response 200_
 
 ```
 
-#### Observação
+### Observação
 
 - Ficou um pouco ambíguo a divisão da porcentagem de 1%, dessa maneira, eu dividi assim:
 - Vendas abaixo de 300 => 1%
