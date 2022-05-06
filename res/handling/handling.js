@@ -1,4 +1,4 @@
-exports.validarCamposNumericos = (args,mins=[])=>{
+exports.validarCamposNumericos = (args,mins=[],maxs=[])=>{
 
     if((args.vendedor || args.valor)==undefined){
       return ["Campos vendedor e valor devem ser preenchidos!"]
@@ -17,7 +17,10 @@ exports.validarCamposNumericos = (args,mins=[])=>{
 
         if (args[key] < mins[index]){
             listErros.push(`Campo '${key}' deve ser maior que ${mins[index]}.`)
-        }      
+        }  
+        if (args[key] > maxs[index]){
+          listErros.push(`Campo '${key}' deve ser menor que ${maxs[index]}.`)
+      }     
        }
   
        return listErros.length == 0? null : listErros

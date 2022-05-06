@@ -11,7 +11,8 @@ exports.calculaComissao = async (req,res)=>{
             return res.status(400).send({"erro":"Deve ser informado os dados de venda!"})
         }
         const errosData = handlingErros.validarData({"data":pedidos[0].data})
-        const errosNumericos = handlingErros.validarCamposNumericos({"vendedor":pedidos[0].vendedor,"valor":pedidos[0].valor},[0,0]) 
+        const errosNumericos = handlingErros.validarCamposNumericos({"vendedor":pedidos[0].vendedor,"valor":pedidos[0].valor},[0,0],[10000,10000000000000]) 
+
         const erros = errosData.concat(errosNumericos)
         if(erros.length>0){
             return res.status(400).send({"erro":erros})
@@ -22,13 +23,13 @@ exports.calculaComissao = async (req,res)=>{
     
         pedidos.forEach((venda)=>{
             let mes = moment(venda.data).month()+1
-            let index = totalVendas.findIndex(cur=>cur.vendedor == venda.vendedor && cur.mes==mes)
+            let index = totalVendas.findIndex(cur=>cur.vendedor == parseInt(venda.vendedor) && cur.mes==mes)
     
             if(index==-1){    
-                totalVendas.push({"vendedor":venda.vendedor,"mes":mes,"valor":0,"qtd":1,"totalValor":venda.valor})
+                totalVendas.push({"vendedor":parseInt(venda.vendedor),"mes":mes,"valor":0,"qtd":1,"totalValor":parseInt(venda.valor)})
             }
             else{
-                totalVendas[index].totalValor += venda.valor
+                totalVendas[index].totalValor += parseInt(venda.valor)
                 totalVendas[index].qtd += 1
             }
         })
