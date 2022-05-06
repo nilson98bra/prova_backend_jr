@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const comissaoControllers = require("../controllers/comissaoControllers")
 
-router.post("/calcula-comissao",comissaoControllers.calculaComissao)
+router.post("/calcular-comissao",comissaoControllers.calculaComissao)
 
 module.exports = router
